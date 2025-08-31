@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include<stdlib.h>
+
+void swap(int *a, int *b){
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void change(int *a, int index, int n){
+    
+    for(int i = (index + 1); i < n; i++){
+        if(a[i] != 0){
+            swap(&a[index], &a[i]);
+            return;
+        }
+    }
+    return;
+    
+}
+
+int main() {
+	
+	int *p;
+	
+	int n;
+	scanf("%d", &n);
+	
+	p = (int *)malloc(n*sizeof(int));
+	for(int i = 0; i < n; i++){
+	    scanf("%d", (p + i));
+	}
+	
+	for(int i = 0; i < n; i++){
+	    if(p[i] == 0 && i != (n - 1)){
+	        change(p, i, n);
+	    }
+	}
+	
+	for(int i = 0; i < n; i++){
+	    printf("%d ", *(p + i));
+	}
+	
+
+}
+
