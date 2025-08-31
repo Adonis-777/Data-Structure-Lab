@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include<stdlib.h>
+
+
+
+struct node{
+    int data;
+    struct node *link;
+};
+
+typedef struct node* NODE;
+
+NODE getnode(){
+    NODE temp;
+    temp = (NODE)malloc(sizeof(struct node));
+    if(temp == NULL){
+        printf("No memory");
+        exit(0);
+    }
+    return temp;
+}
+
+void create(NODE head){
+    NODE temp, curr;
+    int x;
+    
+    while(1){
+        printf("\nEnter data: ");
+        scanf("%d", &x);
+        if(x == -999) break;
+        
+        temp = getnode();
+        temp->data = x;
+        temp->link = NULL;
+        
+        if(head->link == NULL){
+            head->link = temp;
+        }
+        else{
+            curr = head->link;
+            while(curr->link != NULL){
+                curr = curr->link;
+            }
+            curr->link = temp;
+            
+        }
+    }
+}
+
+void display(NODE head){
+    if(head->link == NULL){
+        printf("Empty linked list");
+        return;
+    }
+    NODE curr;
+    curr = head->link;
+    while(curr != NULL){
+        printf("%d ", curr->data);
+        curr = curr->link;
+    }
+}
+
+int main() {
+    
+    
+	NODE head;
+	head = getnode();
+	create(head);
+	display(head);
+	
+	
+
+}
+
