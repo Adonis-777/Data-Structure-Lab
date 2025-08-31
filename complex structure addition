@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include<stdlib.h>
+
+
+
+struct comp{
+    int r, i;
+};
+
+typedef struct comp complex;
+
+complex* c_add(complex *c1, complex *c2){
+    complex *ans;
+    ans = (complex *)malloc(sizeof(complex));
+    ans->r = (c1->r + c2->r);
+    ans->i = (c1->i + c2->i);
+    return ans;
+}
+
+int main() {
+    
+    complex *c1, *c2, *c3;
+    
+    c1 = (complex *)malloc(sizeof(complex));
+    c2 = (complex *)malloc(sizeof(complex));
+    
+    
+    scanf("%d%d", &c1->r, &c1->i);
+  //  printf("%d + %d i", c1->r, c1->i);
+	scanf("%d%d", &c2->r, &c2->i);
+	
+	c3 = c_add(c1, c2);
+	
+	printf("%d + (%d)i", c3->r, c3->i);
+	
+	
+	
+	
+
+}
+
