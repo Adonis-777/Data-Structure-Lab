@@ -1,1 +1,84 @@
-//to be added
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node *link;
+};
+
+typedef struct node *NODE;
+
+// Function to create a new node
+NODE getnode() {
+    NODE temp = (NODE)malloc(sizeof(struct node));
+    if (temp == NULL) {
+        printf("Memory allocation failed\n");
+        exit(1);
+    }
+    return temp;
+}
+
+// Enqueue operation (insert at rear)
+void enqueue(NODE *front, NODE *rear, int key) {
+    NODE temp = getnode();
+    temp->data = key;
+    temp->link = NULL;
+
+    if (*rear == NULL) {  // Queue is empty
+        *front = *rear = temp;
+    } else {
+        (*rear)->link = temp;
+        *rear = temp;
+    }
+}
+
+// Dequeue operation (remove from front)
+int dequeue(NODE *front, NODE *rear) {
+    if (*front == NULL) {
+        printf("Queue Underflow - Queue is empty\n");
+        return -1;
+    }
+
+    NODE temp = *front;
+    int value = temp->data;
+    *front = (*front)->link;
+
+    if (*front == NULL) {  // If queue becomes empty
+        *rear = NULL;
+    }
+    free(temp);
+    return value;
+}
+
+// Display queue elements
+void display(NODE front) {
+    if (front == NULL) {
+        printf("Queue is empty\n");
+        return;
+    }
+    NODE temp = front;
+    printf("Queue: ");
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->link;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    NODE front = NULL, rear = NULL;
+
+    enqueue(&front, &rear, 10);
+    enqueue(&front, &rear, 20);
+    enqueue(&front, &rear, 30);
+    enqueue(&front, &rear, 40);
+
+    display(front);
+
+    int removed = dequeue(&front, &rear);
+    if(removed != -1) printf("Dequeued: %d\n", removed);
+
+    display(front);
+
+    return 0;
+}
