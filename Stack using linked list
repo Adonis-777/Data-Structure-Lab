@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node{
+    int data;
+    struct node * link;
+};
+typedef struct node * NODE;
+
+NODE getnode(){
+    NODE temp;
+    temp = (NODE)malloc(sizeof(struct node));
+    if(temp == NULL){
+        printf("\nNot enough memory");
+        exit(1);
+    }
+    
+    return temp;
+}
+
+void push(NODE head, int key){
+    
+    NODE temp;
+    temp = getnode();
+    
+    temp->data = key;
+    temp->link = NULL;
+    
+    if(head->link == NULL){
+        head->link = temp;
+        return;
+    }
+    
+    temp->link = head->link;
+    head->link = temp;
+    
+}
+
+int pop(NODE head){
+    
+    if(head->link == NULL){
+        printf("\nStack is empty");
+        return -1;
+    }
+    
+    NODE temp = head->link;
+    int ans = temp->data;
+    head->link = temp->link;
+    free(temp);
+    return ans;
+    
+}
+
+int main() {
+	// your code goes here
+
+}
+
