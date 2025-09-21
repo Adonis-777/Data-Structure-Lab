@@ -1,34 +1,29 @@
 #include <stdio.h>
-#include<stdlib.h>
-
-
 
 struct node{
     int data;
-    struct node *link;
+    struct node * link;
 };
-
-typedef struct node* NODE;
+typedef struct node * NODE;
 
 NODE getnode(){
     NODE temp;
     temp = (NODE)malloc(sizeof(struct node));
     if(temp == NULL){
-        printf("No memory");
-        exit(0);
+        printf("\nNot enough memory");
+        exit(1);
     }
+    
     return temp;
 }
 
 void create(NODE head){
-    NODE temp, curr;
     int x;
-    
+    NODE temp, curr;
     while(1){
-        printf("\nEnter data: ");
+        printf("\nEnter the data to be entered in linked list: ");
         scanf("%d", &x);
-        if(x == -999) break;
-        
+        if(x == -1) break;
         temp = getnode();
         temp->data = x;
         temp->link = NULL;
@@ -42,33 +37,163 @@ void create(NODE head){
                 curr = curr->link;
             }
             curr->link = temp;
-            
         }
     }
 }
 
-void display(NODE head){
+void insert_end(NODE head){
     if(head->link == NULL){
-        printf("Empty linked list");
+        printf("\nLinked list is empty");
         return;
     }
+    
+    int x;
+    printf("\nEnter the value you want to enter in the end of the linked list: ");
+    scanf("%d", &x);
+    
+    NODE curr;
+    curr = head->link;
+    while(curr->link != NULL){
+        curr = curr->link;
+    }
+    NODE temp;
+    temp = getnode();
+    temp->data = x;
+    temp->link = NULL;
+    curr->link = temp;
+    
+}
+
+bool search(NODE head, int key){
+    if(head->link == NULL){
+        printf("\nLinked list is empty");
+        return false;
+    }
+    
+    NODE curr;
+    curr = head->link;
+    
+    while(curr->link != NULL){
+        if(key == curr->data) return true;
+        curr = curr->link;
+    }
+    return false;
+}
+
+void display(NODE head){
+    if(head->link == NULL){
+        printf("\nLinked list is empty");
+        return;
+    }
+    
     NODE curr;
     curr = head->link;
     while(curr != NULL){
-        printf("%d ", curr->data);
+        printf("%d -> ", curr->data);
         curr = curr->link;
     }
+    
+    printf("End");
 }
 
+void insert_before(NODE head){
+    
+    if(head->link == NULL){
+        printf("\nLinked list is empty");
+        return;
+    }
+    
+    int x, key;
+    printf("\nEnter the number you want to add and before which number it is that you want to add: ");
+    scanf("%d%d", &x, &key);
+    
+    if(search(head, key)){
+        
+        NODE parent, curr, temp;
+        parent = head;
+        curr = head->link;
+        temp = getnode();
+        temp->data = x;
+        temp->link = NULL;
+        while(curr->data != key){
+            parent = curr;
+            curr = curr->link;
+        }
+        
+        parent->link = temp;
+        temp->link = curr;
+    }
+    else{
+        printf("\nElement not present in linked list");
+        return;
+    }
+    
+}
+
+void del_end(NODE head){
+    NODE parent, curr;
+    if(head->link == NULL){
+        printf("\nLinked list is empty");
+        return;
+    }
+    
+    parent = head;
+    curr = head->link;
+    
+    while(curr->link != NULL){
+        parent = curr;
+        curr = curr->link;
+    }
+    
+    parent->link = NULL;
+    free(curr);
+    
+}
+
+
+/*
+void del_before(NODE head){
+    
+    if(head->link == NULL){
+        printf("\nLinked list is empty");
+        return;
+    }
+    
+    int key;
+    printf("\nEnter the number before which you want to delete: ");
+    scanf("%d", &key);
+    
+    if(search(head, key)){
+        NODE parent, curr, grandparent;
+        
+        grandparent = head;
+        
+        parent = head->link;
+        curr = head->link->link;
+        
+        while(curr->data != key && curr != NULL){
+            grandparent = parent
+            parent = curr;
+            curr = curr->link;
+        }
+        
+        grandparent->link = curr;
+        free(parent);
+        
+    }
+    else{
+        printf("\nElement not found");
+        return;
+    }
+    
+}
+
+*/
+
+
+
 int main() {
-    
-    
-	NODE head;
-	head = getnode();
-	create(head);
-	display(head);
-	
-	
+	// your code goes here
 
 }
 
